@@ -1,4 +1,4 @@
-# Projet d'Automatisation de Ferme à Troll
+# Projet Rust de Ferme à Troll
 
 ## Vue d'ensemble
 
