@@ -8,3 +8,5 @@ thirtyfour = "0.32.0"
 tokio = { version = "1", features = ["full"] }
 wait = "0.1.0"
 wait_for = "0.1.1"
+capsolver = "0.4.1"
+path = "0.8.2"

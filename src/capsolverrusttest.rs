@@ -3,7 +3,6 @@ use tokio;
 use std::time::Duration;
 use std::error::Error;
 use tokio::time::sleep;
-use std::path::Path;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
@@ -113,25 +112,14 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
         sleep(Duration::from_secs(1)).await;
     }
 
-    // Debug: Take a screenshot after clicking the second "Suivant" button
-    driver.screenshot(Path::new("after_second_suivant_button.png")).await?;
-
-    // Wait for the captcha ID element to appear
+    // Click the "Authentifier" button
     let captcha_id_elem = driver
-        .query(By::XPath("//p[contains(@class, 'embeddedSessionID')]"))
-        .wait(Duration::from_secs(20), Duration::from_secs(1))
-        .single()
-        .await;
-
-    match captcha_id_elem {
-        Ok(element) => {
-            let captcha_id = element.text().await?;
-            println!("Captcha ID: {}", captcha_id);
-        }
-        Err(e) => {
-            println!("Failed to find captcha ID element: {:?}", e);
-        }
-    }
+    .query(By::XPath("/html/body/div/div/div[1]/p[2]"))
+    .wait(Duration::from_secs(10), Duration::from_secs(1))
+    .single()
+    .await?;
+    let captcha_id = captcha_id_elem.text().await?;
+    println!("Captcha ID: {}", captcha_id);
 
     Ok(())
 }
